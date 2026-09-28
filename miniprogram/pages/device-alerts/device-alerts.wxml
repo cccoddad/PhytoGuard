@@ -20,7 +20,7 @@
 
   <view class="page-head">
     <view>
-      <text class="eyebrow">PlantGuard</text>
+      <text class="eyebrow">PhytoGuard</text>
       <text class="page-title">{{pageTitle}}</text>
     </view>
     <button class="top-btn" bindtap="onTopBtn">

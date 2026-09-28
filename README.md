@@ -1,4 +1,4 @@
-# PlantGuard — 基于边缘AI的植物病害智能监测系统
+# PhytoGuard — 基于边缘AI的植物病害智能监测系统
 
 ## 项目简介
 
@@ -7,7 +7,7 @@
 ## 目录结构
 
 ```
-plantguard/
+PhytoGuard/
 ├── README.md              # 本文件
 ├── doc/                   # 方案与设计文档
 │   ├── 00-master-plan.md      # 四阶段总览与进度

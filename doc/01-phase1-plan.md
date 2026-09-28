@@ -9,7 +9,7 @@
 ## G. 新建 `doc/` 目录
 
 ```
-plantguard/
+PhytoGuard/
 └── doc/
     ├── README.md              # 目录索引 + 各文件用途
     ├── 00-master-plan.md      # 四阶段总览、排期、进度打勾表
@@ -132,7 +132,7 @@ board/heshi_v2_dual_infer
 
 ```powershell
 # 1. cloud 能起
-cd cloud; npm install; npm start        # -> Plant Alert API running on :8080
+cd cloud; npm install; npm start        # -> PhytoGuard Alert API running on :8080
 
 # 2. 全链路 curl（带假图）
 curl POST /api/alerts   {device_id, top1_label:"Tomato___Late_blight", image_base64:<小图>}

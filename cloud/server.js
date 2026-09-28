@@ -45,5 +45,5 @@ app.get('/api/health', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Plant Alert API running on http://0.0.0.0:${PORT}`);
+    console.log(`PhytoGuard Alert API running on http://0.0.0.0:${PORT}`);
 });

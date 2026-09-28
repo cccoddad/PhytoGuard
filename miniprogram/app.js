@@ -5,7 +5,7 @@
  */
 App({
   onLaunch() {
-    console.log('PlantGuard mini-program launched');
+    console.log('PhytoGuard mini-program launched');
   },
 
   globalData: {

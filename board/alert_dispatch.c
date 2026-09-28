@@ -551,7 +551,7 @@ int alert_dispatch_send(const char *ppm_path, int camera_id,
             g_last_alert_class = top1_id;
             g_last_sms_time = now;
             snprintf(sms_msg, sizeof(sms_msg),
-                "[PlantGuard]\r\n"
+                "[PhytoGuard]\r\n"
                 "Device: %s\r\n"
                 "Alert: %s\r\n"
                 "Confidence: %.1f%%\r\n"
