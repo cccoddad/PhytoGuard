@@ -1,0 +1,44 @@
+.page {
+  padding: 24rpx;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 32rpx;
+}
+
+.title {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 24rpx;
+}
+
+.field {
+  margin-bottom: 24rpx;
+}
+
+.label {
+  display: block;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 8rpx;
+}
+
+.input {
+  border: 1rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  padding: 16rpx 20rpx;
+  font-size: 28rpx;
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 26rpx;
+  margin-bottom: 16rpx;
+}
+
+.submit {
+  margin-top: 8rpx;
+}

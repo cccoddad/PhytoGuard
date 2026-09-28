@@ -1,0 +1,33 @@
+{
+  "pages": [
+    "pages/alerts/alerts",
+    "pages/detail/detail",
+    "pages/devices/devices",
+    "pages/register/register",
+    "pages/device-alerts/device-alerts"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#2e7d32",
+    "navigationBarTitleText": "PlantGuard",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#2e7d32",
+    "backgroundColor": "#fff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/alerts/alerts",
+        "text": "告警"
+      },
+      {
+        "pagePath": "pages/devices/devices",
+        "text": "设备"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

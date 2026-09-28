@@ -1,0 +1,50 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          heshi
+# Required-Start:    $local_fs S98l610
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: PlantGuard two-stage inference autostart
+### END INIT INFO
+#
+# 推理开机自启。
+# 设计决策（见 doc/01-phase1-plan.md D4）：run_attach_two_stage.sh 内部已经包含
+# 「起 sample_vio → 轮询 sensor init → 起两阶段推理 → trap 清理」的完整逻辑，
+# 这里不再重复实现，只负责清理上次残留进程后 exec 过去。
+#
+# 注意：未经实机验证。
+
+DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+
+case "${1:-start}" in
+    start)
+        # 清掉上次异常退出残留的进程，避免端口/设备占用。
+        pkill -x heshi_v2_dual_infer 2>/dev/null || true
+        pkill -f sample_vio 2>/dev/null || true
+        sleep 1
+        # exec 让 run_attach 成为本脚本进程本体，信号能直达清理逻辑。
+        exec sh "$DIR/run_attach_two_stage.sh"
+        ;;
+    stop)
+        pkill -x heshi_v2_dual_infer 2>/dev/null || true
+        pkill -f sample_vio 2>/dev/null || true
+        echo "heshi inference stopped"
+        ;;
+    restart)
+        "$0" stop
+        "$0" start
+        ;;
+    status)
+        if pgrep -x heshi_v2_dual_infer >/dev/null 2>&1; then
+            echo "heshi inference running"
+            exit 0
+        fi
+        echo "heshi inference not running"
+        exit 3
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+        ;;
+esac

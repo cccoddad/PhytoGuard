@@ -1,0 +1,58 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          l610
+# Required-Start:    $network
+# Required-Stop:     $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: L610 4G dial-up and link watchdog
+### END INIT INFO
+#
+# L610 4G 开机拨号入口：拉起 l610_watchdog.sh（内部先 connect 再守护）。
+# 注意：未经实机验证。兼容 busybox init 的 SNN 名字调用与 LSB 的 start|stop 两种方式。
+
+DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+WATCHDOG="$DIR/l610_watchdog.sh"
+PIDFILE=/var/run/l610_watchdog.pid
+
+start() {
+    if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+        echo "l610 watchdog already running"
+        return 0
+    fi
+    # 先同步拨一次号，失败不阻塞开机（watchdog 后面会持续重试）。
+    sh "$DIR/l610_connect.sh" >/dev/null 2>&1 || true
+    # 后台守护；重定向到 /dev/null 避免占用 init 的标准输出。
+    sh "$WATCHDOG" </dev/null >/dev/null 2>&1 &
+    echo "l610 watchdog started"
+}
+
+stop() {
+    if [ -f "$PIDFILE" ]; then
+        kill "$(cat "$PIDFILE")" 2>/dev/null || true
+        rm -f "$PIDFILE"
+    fi
+    # 兜底：把残留的 watchdog 进程也清掉。
+    pkill -f l610_watchdog.sh 2>/dev/null || true
+    echo "l610 watchdog stopped"
+}
+
+status() {
+    if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE")" 2>/dev/null; then
+        echo "l610 watchdog running (pid $(cat "$PIDFILE"))"
+        return 0
+    fi
+    echo "l610 watchdog not running"
+    return 3
+}
+
+case "${1:-start}" in
+    start)   start ;;
+    stop)    stop ;;
+    restart) stop; start ;;
+    status)  status ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+        ;;
+esac

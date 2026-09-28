@@ -1,0 +1,9 @@
+node_modules/
+__pycache__/
+*.pyc
+cloud/data/*.db
+cloud/data/*.db-*
+cloud/uploads/*
+!cloud/uploads/.gitkeep
+board/*.o
+board/heshi_v2_dual_infer

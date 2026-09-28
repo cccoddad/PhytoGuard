@@ -1,0 +1,89 @@
+<wxs module="fmt">
+  function ts(ms) {
+    var d = getDate(ms);
+    var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) +
+           ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
+  }
+  function severity(prob) {
+    if (prob >= 0.85) return '严重';
+    if (prob >= 0.70) return '注意';
+    return '轻微';
+  }
+  module.exports = { ts: ts, severity: severity };
+</wxs>
+
+<view wx:if="{{loading}}" class="loading">
+  <text>加载中...</text>
+</view>
+
+<view wx:elif="{{alert}}" class="container"
+      bindtouchstart="onTouchStart"
+      bindtouchend="onTouchEnd">
+  <view class="image-box" wx:if="{{alert.image_url}}" bindtap="previewImage">
+    <image class="alert-image" src="{{alert.image_url}}" mode="aspectFit" />
+    <view class="image-hint">查看原图</view>
+  </view>
+
+  <view class="image-empty" wx:else>
+    <text class="image-empty-icon">!</text>
+    <text>本条告警暂无现场图片</text>
+  </view>
+
+  <view class="info-card">
+    <view class="status-pill {{alert.statusClass}}">
+      {{alert.statusText}}
+    </view>
+    <view class="disease-title">
+      {{alert.displayName}}
+    </view>
+    <view class="disease-sub">{{alert.top1_label}}</view>
+  </view>
+
+  <view class="stats-grid">
+    <view class="stat-item">
+      <text class="stat-value severity-{{alert.severityClass}}">{{alert.probPercent}}%</text>
+      <text class="stat-label">置信度 · {{alert.severityText}}</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-value">{{alert.consecutive_hits}}</text>
+      <text class="stat-label">连续命中</text>
+    </view>
+    <view wx:if="{{alert.tempText}}" class="stat-item">
+      <text class="stat-value">{{alert.tempText}}</text>
+      <text class="stat-label">温度</text>
+    </view>
+    <view wx:if="{{alert.humText}}" class="stat-item">
+      <text class="stat-value">{{alert.humText}}</text>
+      <text class="stat-label">湿度</text>
+    </view>
+  </view>
+
+  <view class="detail-card">
+    <view class="card-title">告警信息</view>
+    <view class="detail-row">
+      <text class="detail-key">设备</text>
+      <text class="detail-val">{{alert.device_id}}</text>
+    </view>
+    <view class="detail-row">
+      <text class="detail-key">时间</text>
+      <text class="detail-val">{{fmt.ts(alert.ts_ms)}}</text>
+    </view>
+    <view class="detail-row">
+      <text class="detail-key">类别ID</text>
+      <text class="detail-val">{{alert.top1_id}}</text>
+    </view>
+    <view class="detail-row">
+      <text class="detail-key">英文标签</text>
+      <text class="detail-val">{{alert.top1_label}}</text>
+    </view>
+    <view class="detail-row">
+      <text class="detail-key">状态</text>
+      <text class="detail-val">{{alert.statusText}}</text>
+    </view>
+  </view>
+
+  <view class="btn-row" wx:if="{{!alert.acknowledged}}">
+    <button class="ack-btn" bindtap="markRead">标记已读</button>
+  </view>
+</view>

@@ -1,0 +1,109 @@
+<wxs module="fmt">
+  function ago(ms) {
+    if (!ms) return '';
+    var diff = getDate().getTime() - ms;
+    if (diff < 60000) return Math.floor(diff / 1000) + '秒前';
+    if (diff < 3600000) return Math.floor(diff / 60000) + '分钟前';
+    if (diff < 86400000) return Math.floor(diff / 3600000) + '小时前';
+    return Math.floor(diff / 86400000) + '天前';
+  }
+  module.exports = { ago: ago };
+</wxs>
+
+<view class="container">
+  <view wx:if="{{error}}" class="error-bar">
+    <text>{{error}}</text>
+  </view>
+
+  <view class="page-head">
+    <view>
+      <text class="eyebrow">Device Monitor</text>
+      <text class="page-title">设备状态</text>
+    </view>
+    <button class="clear-btn" bindtap="onRegisterTap">设备接入</button>
+  </view>
+
+  <!-- tappable stat bar -->
+  <view class="summary-bar">
+    <view class="summary-item tap {{filter === 'all' ? 'active' : ''}}" bindtap="onStatTap" data-key="all">
+      <text class="summary-count">{{totalCount}}</text>
+      <text class="summary-text">全部</text>
+    </view>
+    <view class="summary-item tap {{filter === 'online' ? 'active' : ''}}" bindtap="onStatTap" data-key="online">
+      <text class="summary-count online">{{onlineCount}}</text>
+      <text class="summary-text">运行中</text>
+    </view>
+    <view class="summary-item tap {{filter === 'offline' ? 'active' : ''}}" bindtap="onStatTap" data-key="offline">
+      <text class="summary-count offline">{{offlineCount}}</text>
+      <text class="summary-text">离线</text>
+    </view>
+  </view>
+
+  <!-- filter hint -->
+  <view wx:if="{{filter === 'online'}}" class="hint-bar">
+    <text>已筛选：运行中设备（{{devices.length}} 台）</text>
+  </view>
+  <view wx:elif="{{filter === 'offline'}}" class="hint-bar">
+    <text>已筛选：离线设备（{{devices.length}} 台）</text>
+  </view>
+
+  <block wx:for="{{devices}}" wx:key="device_id">
+    <view class="device-card {{item.onlineClass}}">
+      <view class="device-header">
+        <view class="device-name-row">
+          <view class="online-dot {{item.onlineClass}}"></view>
+          <view>
+            <text class="device-name">{{item.displayName}}</text>
+            <text class="device-location">{{item.locationText}}</text>
+          </view>
+        </view>
+        <view class="state-pill {{item.onlineClass}}">{{item.onlineText}}</view>
+      </view>
+
+      <view class="device-info">
+        <view class="info-item">
+          <text class="info-label">开机状态</text>
+          <text class="info-value">{{item.bootText}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">内存占用</text>
+          <text class="info-value {{item.memoryClass}}">{{item.memoryText}}</text>
+        </view>
+      </view>
+
+      <view class="sensor-grid">
+        <view class="sensor-item">
+          <text class="sensor-label">温度</text>
+          <text class="sensor-value">{{item.temperatureText}}</text>
+        </view>
+        <view class="sensor-item">
+          <text class="sensor-label">湿度</text>
+          <text class="sensor-value">{{item.humidityText}}</text>
+        </view>
+        <view class="sensor-item tap" wx:if="{{item.alertCount > 0}}" bindtap="goDeviceAlerts" data-device-id="{{item.device_id}}">
+          <text class="sensor-label">病害告警</text>
+          <text class="sensor-value count {{item.countClass}}">{{item.alertCount}}</text>
+        </view>
+        <view class="sensor-item" wx:else>
+          <text class="sensor-label">病害告警</text>
+          <text class="sensor-value count {{item.countClass}}">{{item.alertCount}}</text>
+        </view>
+      </view>
+
+      <view class="device-foot">
+        <text>最后上报</text>
+        <text wx:if="{{item.lastSeenTs}}">{{fmt.ago(item.lastSeenTs)}}</text>
+        <text wx:else>暂无记录</text>
+      </view>
+    </view>
+  </block>
+
+  <view wx:if="{{loading}}" class="loading-tip">
+    <text>加载中...</text>
+  </view>
+  <view wx:elif="{{devices.length === 0 && !error}}" class="empty-tip">
+    <text wx:if="{{filter !== 'all'}}">没有符合条件的设备</text>
+    <text wx:else>暂无设备注册</text>
+    <text class="sub-tip">板子上报状态后会显示在这里</text>
+  </view>
+</view>

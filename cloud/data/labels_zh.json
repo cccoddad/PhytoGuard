@@ -1,0 +1,18 @@
+{
+  "0": {"class_name": "Apple___Apple_scab", "crop": "苹果", "disease": "黑星病"},
+  "1": {"class_name": "Apple___healthy", "crop": "苹果", "disease": "健康"},
+  "2": {"class_name": "Corn___Cercospora_leaf_spot Gray_leaf_spot", "crop": "玉米", "disease": "灰斑病"},
+  "3": {"class_name": "Corn___Common_rust", "crop": "玉米", "disease": "普通锈病"},
+  "4": {"class_name": "Corn___Northern_Leaf_Blight", "crop": "玉米", "disease": "大斑病"},
+  "5": {"class_name": "Corn___healthy", "crop": "玉米", "disease": "健康"},
+  "6": {"class_name": "Grape___Black_rot", "crop": "葡萄", "disease": "黑腐病"},
+  "7": {"class_name": "Grape___healthy", "crop": "葡萄", "disease": "健康"},
+  "8": {"class_name": "Potato___Early_blight", "crop": "马铃薯", "disease": "早疫病"},
+  "9": {"class_name": "Potato___Late_blight", "crop": "马铃薯", "disease": "晚疫病"},
+  "10": {"class_name": "Potato___healthy", "crop": "马铃薯", "disease": "健康"},
+  "11": {"class_name": "Tomato___Early_blight", "crop": "番茄", "disease": "早疫病"},
+  "12": {"class_name": "Tomato___Late_blight", "crop": "番茄", "disease": "晚疫病"},
+  "13": {"class_name": "Tomato___Leaf_Mold", "crop": "番茄", "disease": "叶霉病"},
+  "14": {"class_name": "Tomato___healthy", "crop": "番茄", "disease": "健康"},
+  "15": {"class_name": "Unknown_or_Background", "crop": "其他", "disease": "未知/背景"}
+}

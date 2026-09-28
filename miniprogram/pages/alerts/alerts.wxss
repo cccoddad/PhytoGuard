@@ -1,0 +1,241 @@
+/* ---- Top button ---- */
+.top-btn {
+  min-width: 140rpx;
+  height: 58rpx;
+  margin: 0;
+  padding: 0 24rpx;
+  background: #2f6f44;
+  color: #ffffff;
+  border: none;
+  border-radius: 10rpx;
+  font-size: 25rpx;
+  font-weight: 600;
+  line-height: 58rpx;
+}
+
+.top-btn::after { border: none; }
+
+/* ---- Select toolbar ---- */
+.select-toolbar {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 24rpx;
+  padding: 18rpx;
+  background: #ffffff;
+  border: 1rpx solid #dfe8e1;
+  border-radius: 14rpx;
+}
+
+.toolbar-btn {
+  flex: 1;
+  height: 58rpx;
+  margin: 0;
+  padding: 0 12rpx;
+  background: #eef2ef;
+  color: #2f6f44;
+  border: 1rpx solid #cfe1d4;
+  border-radius: 10rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  line-height: 58rpx;
+}
+
+.toolbar-btn::after { border: none; }
+
+.toolbar-btn.danger {
+  background: #fde7e7;
+  color: #b92f2f;
+  border-color: #f5c6c6;
+}
+
+/* ---- Checkbox ---- */
+.card-checkbox {
+  flex-shrink: 0;
+  width: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16rpx;
+}
+
+.checkbox {
+  width: 40rpx;
+  height: 40rpx;
+  border: 3rpx solid #c0cfc4;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.checkbox.checked {
+  background: #2f6f44;
+  border-color: #2f6f44;
+  color: #ffffff;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+/* ---- Alert card in select mode ---- */
+.alert-card.selectable {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- Stats bar ---- */
+.stats-bar {
+  display: flex;
+  margin-bottom: 24rpx;
+  background: #ffffff;
+  border: 1rpx solid #dfe8e1;
+  border-radius: 14rpx;
+  box-shadow: 0 12rpx 30rpx rgba(39, 75, 49, 0.08);
+  overflow: hidden;
+}
+
+.stats-bar .stat-item {
+  flex: 1;
+  padding: 26rpx 8rpx 24rpx;
+  text-align: center;
+}
+
+.stats-bar .stat-item + .stat-item { border-left: 1rpx solid #eef2ef; }
+.stats-bar .stat-item.tap { cursor: pointer; }
+.stats-bar .stat-item.active { background: #e5f3e9; margin: -1rpx; border: 2rpx solid #2f8f46; border-radius: 14rpx; }
+.stats-bar .stat-item.active + .stat-item { border-left-color: transparent; }
+
+.hint-bar {
+  margin-bottom: 18rpx;
+  padding: 14rpx 20rpx;
+  background: #e5f3e9;
+  border-radius: 10rpx;
+  color: #2f6f44;
+  font-size: 24rpx;
+}
+
+.stat-num {
+  display: block;
+  color: #1d3325;
+  font-size: 44rpx;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.stat-num.today { color: #a95b11; }
+.stat-num.unread { color: #b92f2f; }
+
+.stat-label {
+  display: block;
+  margin-top: 8rpx;
+  color: #77857b;
+  font-size: 22rpx;
+}
+
+/* ---- Alert card ---- */
+.alert-card {
+  margin-bottom: 18rpx;
+  padding: 24rpx;
+  background: #ffffff;
+  border: 1rpx solid #dfe8e1;
+  border-radius: 14rpx;
+  box-shadow: 0 10rpx 24rpx rgba(31, 58, 39, 0.07);
+}
+
+.alert-card.unread { border-left: 8rpx solid #2e7d32; }
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18rpx;
+}
+
+.disease-row {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1;
+  gap: 12rpx;
+}
+
+.disease-name {
+  min-width: 0;
+  color: #17251b;
+  font-size: 32rpx;
+  font-weight: 750;
+  line-height: 1.35;
+}
+
+.severity-tag {
+  flex-shrink: 0;
+  min-width: 78rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 8rpx;
+  font-size: 23rpx;
+  font-weight: 700;
+  text-align: center;
+}
+
+.severity-severe { background: #fde7e7; color: #b92f2f; }
+.severity-warning { background: #fff0d8; color: #a95b11; }
+.severity-normal { background: #e5f3e9; color: #2f6f44; }
+
+.status-pill {
+  flex-shrink: 0;
+  padding: 7rpx 14rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  font-weight: 700;
+}
+
+.status-pill.new { background: #e5f3e9; color: #2f6f44; }
+.status-pill.done { background: #eef2ef; color: #7a897e; }
+
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-top: 14rpx;
+}
+
+.label-en {
+  padding: 5rpx 12rpx;
+  border-radius: 8rpx;
+  font-size: 23rpx;
+  background: #f2f1ec;
+  color: #758077;
+}
+
+.env-tag {
+  padding: 5rpx 12rpx;
+  border-radius: 8rpx;
+  font-size: 23rpx;
+  background: #e5f3e9;
+  color: #2f6f44;
+  font-weight: 500;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 18rpx;
+  margin-top: 18rpx;
+  padding-top: 18rpx;
+  border-top: 1rpx solid #eef2ef;
+}
+
+.device-id { color: #7a897e; font-size: 24rpx; }
+.time { flex-shrink: 0; color: #7a897e; font-size: 24rpx; }
+
+/* ---- Misc ---- */
+.loading-tip { padding: 40rpx; text-align: center; color: #7a897e; font-size: 26rpx; }
+.empty-tip { padding: 80rpx 40rpx; text-align: center; color: #7a897e; }
+.empty-tip .sub-tip { display: block; margin-top: 12rpx; font-size: 24rpx; color: #aab5ad; }
+.error-bar { padding: 18rpx 24rpx; background: #fde7e7; color: #b92f2f; font-size: 24rpx; border-radius: 10rpx; margin-bottom: 18rpx; }

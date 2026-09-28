@@ -1,0 +1,10 @@
+{
+    "cloud_api_url": "http://api.plantguard.cn/api/alerts",
+    "cloud_api_key": "REPLACE_ME_API_KEY",
+    "sms_tty": "/dev/ttyUSB0",
+    "sms_phone": "+86XXXXXXXXXXX",
+    "device_id": "ss928-001",
+    "sms_cooldown_sec": 300,
+    "http_enabled": 1,
+    "sms_enabled": 1
+}

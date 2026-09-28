@@ -1,0 +1,116 @@
+<wxs module="fmt">
+  function ago(ms) {
+    var diff = getDate().getTime() - ms;
+    if (diff < 60000) return Math.floor(diff / 1000) + '秒前';
+    if (diff < 3600000) return Math.floor(diff / 60000) + '分钟前';
+    if (diff < 86400000) return Math.floor(diff / 3600000) + '小时前';
+    if (diff < 604800000) return Math.floor(diff / 86400000) + '天前';
+    var d = getDate(ms);
+    var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  }
+  module.exports = { ago: ago };
+</wxs>
+
+<view class="container"
+      bindtouchstart="onTouchStart"
+      bindtouchend="onTouchEnd">
+
+  <view wx:if="{{error}}" class="error-bar">
+    <text>{{error}}</text>
+  </view>
+
+  <!-- Header -->
+  <view class="page-head">
+    <view>
+      <text class="eyebrow">PlantGuard</text>
+      <text class="page-title">{{pageTitle}}</text>
+    </view>
+    <button class="top-btn" bindtap="onTopBtn">
+      {{selectMode ? '取消' : (deviceId ? '全部已读' : '多选')}}
+    </button>
+  </view>
+
+  <!-- Stats bar -->
+  <view class="stats-bar" wx:if="{{!selectMode}}">
+    <view class="stat-item tap {{filter === 'all' ? 'active' : ''}}"
+          bindtap="onStatTap" data-key="all">
+      <text class="stat-num">{{total}}</text>
+      <text class="stat-label">全部告警</text>
+    </view>
+    <view class="stat-item tap {{filter === 'today' ? 'active' : ''}}"
+          bindtap="onStatTap" data-key="today">
+      <text class="stat-num today">{{todayCount}}</text>
+      <text class="stat-label">今日新增</text>
+    </view>
+    <view class="stat-item tap {{filter === 'unread' ? 'active' : ''}}"
+          bindtap="onStatTap" data-key="unread">
+      <text class="stat-num unread">{{unread}}</text>
+      <text class="stat-label">未处理</text>
+    </view>
+  </view>
+
+  <!-- Select mode toolbar -->
+  <view wx:if="{{selectMode}}" class="select-toolbar">
+    <button class="toolbar-btn" bindtap="onSelectAll">全选 ({{selectedCount}}/{{alerts.length}})</button>
+    <button class="toolbar-btn danger" bindtap="onDeleteSelected" wx:if="{{selectedCount > 0}}">删除{{selectedCount}}条</button>
+    <button class="toolbar-btn" bindtap="exitSelectMode">退出</button>
+  </view>
+
+  <!-- Filter hint -->
+  <view wx:if="{{filter !== 'all' && !selectMode}}" class="hint-bar">
+    <text wx:if="{{filter === 'today'}}">已筛选：今日新增告警</text>
+    <text wx:elif="{{filter === 'unread'}}">已筛选：未处理告警</text>
+  </view>
+
+  <!-- Alert list -->
+  <block wx:for="{{alerts}}" wx:key="id">
+    <view class="alert-card {{item.cardClass}} {{selectMode ? 'selectable' : ''}}"
+          bindtap="{{selectMode ? 'onToggleSelect' : 'goDetail'}}"
+          data-id="{{item.id}}"
+          bindlongpress="onLongPress">
+
+      <!-- Checkbox in select mode -->
+      <view wx:if="{{selectMode}}" class="card-checkbox">
+        <view class="checkbox {{item._checked ? 'checked' : ''}}">
+          <text wx:if="{{item._checked}}">✓</text>
+        </view>
+      </view>
+
+      <view class="card-body">
+        <view class="card-header">
+          <view class="disease-row">
+            <text class="disease-name">{{item.displayName}}</text>
+            <view class="severity-tag severity-{{item.severityClass}}">
+              {{item.probPercent}}%
+            </view>
+          </view>
+          <view class="status-pill {{item.statusClass}}">
+            {{item.statusText}}
+          </view>
+        </view>
+
+        <view class="card-meta">
+          <text class="label-en">{{item.top1_label}}</text>
+          <text wx:if="{{item.envText}}" class="env-tag">{{item.envText}}</text>
+        </view>
+
+        <view class="card-footer">
+          <text class="device-id">{{item.deviceName}}</text>
+          <text class="time">{{fmt.ago(item.ts_ms)}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <view wx:if="{{loading}}" class="loading-tip">
+    <text>加载中...</text>
+  </view>
+  <view wx:elif="{{!hasMore && alerts.length > 0}}" class="loading-tip">
+    <text>没有更多了</text>
+  </view>
+  <view wx:if="{{alerts.length === 0 && !loading && !error}}" class="empty-tip">
+    <text>暂无告警记录</text>
+    <text class="sub-tip">板子检测到病害后将自动出现在这里</text>
+  </view>
+</view>
